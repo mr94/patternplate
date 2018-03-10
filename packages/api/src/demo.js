@@ -6,6 +6,7 @@ const fromString = require("require-from-string");
 const sander = require("@marionebl/sander");
 const unindent = require("unindent");
 const stringHash = require("string-hash");
+const resolveFrom = require("resolve-from");
 
 module.exports = demo;
 
@@ -34,13 +35,18 @@ async function demo(options) {
         return res.sendStatus(404);
       }
 
-      const {fs} = await wait(options.queue);
+      /* const {fs} = await wait(options.queue);
 
       const getModule = fromFs(fs);
       const render = getModule(RENDER_PATH);
       const bundle = getModule(BUNDLE_PATH);
       const component = getComponent(bundle, found);
-      const content = render(component);
+      const content = render(component); */
+
+      const content = {
+        componentPath: found.artifact,
+        mountPath: path.relative(cwd, resolveFrom(cwd, config.mount))
+      };
 
       res.send(html(content, found));
     } catch (err) {
@@ -126,11 +132,13 @@ function html(content, payload) {
         <!-- content.after -->
         ${content.after || ""}
         <!-- ../ -> /api/ -->
-        <script src="../patternplate.web.vendors.js"></script>
-        <script src="../patternplate.web.components.js"></script>
-        <script src="../patternplate.web.probe.js"></script>
-        <script src="../patternplate.web.mount.js"></script>
-        <script src="../patternplate.web.demo.js"></script>
+        <script type="module">
+          import mount from "../modules/${content.mountPath}";
+          import Component from "../modules/${content.componentPath}";
+
+          const el = document.querySelector('data-patternplate-mount="data-patternplate-mount"');
+          mount(Component, el);
+        </script>
       </body>
     </html>
   `);

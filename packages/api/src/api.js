@@ -11,6 +11,7 @@ const micromatch = require("micromatch");
 const WebSocket = require("ws");
 const debug = require("util").debuglog("PATTERNPLATE");
 const Observable = require("zen-observable");
+const { app, Vfs } = require("es6isch");
 
 const createCompiler = require("./compiler");
 const demo = require("./demo");
@@ -28,6 +29,10 @@ async function api({ server, cwd }) {
   const mw = express()
     .get("/state.json", await main({ cwd }))
     .get("/demo/*.html", await demo({ cwd, queue: serverQueue }))
+    .use("/modules", app(Vfs.from({
+      rootAbsBase: cwd,
+      es6ischBase: "/modules"
+    })))
     .use(await pack({ compiler: clientQueue.compiler }));
 
   mw.subscribe = handler => {
