@@ -110,3 +110,23 @@ module.exports = {
   render: "./cover.js"
 };
 ```
+
+### scripts
+
+A map of scripts to execute in the lifecycle of `patternplate`, e.g. for preparations (`start`)
+or for watcher setup (`watch`). 
+
+`scripts` have the files in `node_modules/.bin` availble in their `PATH`.
+
+**Examples**
+
+```js
+module.exports = {
+  scripts: {
+    // waited for to exit with 0 before registering watchers
+    start: "tsc .", 
+    // started in parallel with patternplate, removed when exiting
+    watch: "tsc -w"
+  }
+};
+```

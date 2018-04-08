@@ -233,17 +233,17 @@ the ubiquitous in the JavaScript ecosystem at the time of writing.
 2. Start `patternplate`
 
   ```
-  yarn patternplate
+  ./node_modules/.bin/patternplate
   ```
 
 3. In a second terminal, start Babel in watch mode
 
   ```
-  yarn babel -w
+  npm run babel -w
   ```
 
 4. Access your button component at [localhost:1337/pattern/button](http://localhost:1337/pattern/button).
-   If you used `patternplate` before this should be familiar:
+   If you used `patternplate` before this may be familiar:
 
   ![](https://patternplate.github.io/media/images/screenshot-build.svg)
 
@@ -273,6 +273,44 @@ the ubiquitous in the JavaScript ecosystem at the time of writing.
 
   ![](https://patternplate.github.io/media/images/screenshot-build-changed.svg)
 
+  This works just fine, but managing two process for one task may feel clumsy. 
+  
+  You have to remember to start them both, check
+runtime and build erros in separate terminals windows etc.
+
+  Let's see if we can improve our setup and make our lifes easier.
+
+## Integrate your build with patternplate
+
+`patternplate` provides a `script` configuration that allows you to start your build and `patternplate` in one go. 
+
+The `watch` script is
+wel suited for our use case: It starts long-running tasks in parallel to `patternplate`'s internal watchers.
+
+1. Stop both the `patternplate` and Babel processes.
+
+2. Add a `patternplate.config.js` with a `scripts.watch` entry:
+
+   ```js
+   // patternplate.config.js 
+   module.exports = {
+     scripts: {
+       watch: "npm run babel -w"
+     },
+     docs: ["README.md", "docs/**/*.md"],
+     entry: ["lib/**/demo.js"],
+     render: "@patternplate/render-default/render",
+     mount: "@patternplate/render-default/mount"
+   };
+   ```
+
+3. In a terminal, execute `patternplate`
+
+  ```
+  ./node_modules/.bin/patternplate
+  ```
+
+4. Notice how patternplate emits log messages from the `babel -w` command.
 
 ## Take aways
 
