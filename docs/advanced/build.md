@@ -295,6 +295,7 @@ wel suited for our use case: It starts long-running tasks in parallel to `patter
    // patternplate.config.js 
    module.exports = {
      scripts: {
+       start: "npm run babel",
        watch: "npm run babel -w"
      },
      docs: ["README.md", "docs/**/*.md"],
@@ -310,7 +311,7 @@ wel suited for our use case: It starts long-running tasks in parallel to `patter
   ./node_modules/.bin/patternplate
   ```
 
-4. Notice how patternplate emits log messages from the `babel -w` command.
+4. Notice how patternplate emits log messages from the `npm run` commands.
 
 ## Take aways
 
@@ -319,6 +320,8 @@ wel suited for our use case: It starts long-running tasks in parallel to `patter
 * Configure you build to produce artifacts in `lib` to pick them up with patternplate by default
 
 * The `patternplate` development watcher works with the results of e.g. the Babel watch mode.
+
+* With the `scripts` config you can integrate your build system more tightly with `patternplate` to improve developer experience.
 
 ## Related topics
 
