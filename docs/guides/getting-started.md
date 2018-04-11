@@ -1,5 +1,5 @@
 ---
-displayName: "Guide: Getting Started"
+displayName: "Guide: Getting Started (CLI)"
 description: "Hit the ground running with create-patternplate"
 tags: 
  - Guide
