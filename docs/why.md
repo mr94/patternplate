@@ -14,7 +14,7 @@ options:
 
 ## :construction: This document is Work in Progress :construction:
 
-`patternplate` provides a suite of tools for product development that unlock new levels of collaboration for your team.
+<!-- `patternplate` provides a suite of tools for product development that unlock new levels of collaboration for your team.
 
 ## Design and code in harmony
 
@@ -44,4 +44,4 @@ options:
 
 * Used at SinnerSchrader for projects with dozens of team members
 and millions of users
-* In active development (Link to roadmap)
+* In active development (Link to roadmap) -->
